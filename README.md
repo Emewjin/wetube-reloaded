@@ -1,21 +1,20 @@
 # Youtube Clone - Wetube
 
-## What Can I Do
+## URL Plan
 ### Basic
-- / - Home Page
-
+- / => Home (Main Page)
+- /join
+- /login
+- /search
 
 ### Users
-- /users/join
-- /users/login
-- /users/edit
-- /users/delete
+- /users/:id => See user profile
+- /users/logout
+- /users/edit => Edit my profile
+- /users/delete => Delete my profile
 
 ### Videos
-
-- /videos/search
-- /videos/watch
-- /videos/edit
-- /videos/delete
-- /videos/comments
-- /videos/comments/delete
+- /videos/:id => see video
+- /videos/:id/edit
+- /videos/:id/delete 
+- /videos/upload
