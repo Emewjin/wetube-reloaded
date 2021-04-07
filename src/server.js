@@ -1,36 +1,37 @@
-// create my first server
 import express from "express";
+import morgan from "morgan"
 
-// 1. create express application
-// rules of design
-const app = express();
+const logger = morgan("dev"); 
+const app = express(); 
 
-// 2. configure the application
-// application : how to response get request
+const privateMiddleware = (req, res, next) => {
+    const url = req.url;
+    if (url === "/protected") {
+        return res.send("<h1>Not Allowed</h1>")
+    }
+    console.log('allowed. you may continue');
+    next();
+};
 
-const gossipMiddleware = (req, res, next) => {
-    console.log(`this is middle. someone is going to ${req.url}`);
-    // return res.send('it will be done here') // next()실행되지 않음
-    next(); // next function means handleHome. 이게 없으면 handleHome은 실행되지 않음
-}
-
-const handleHome = (req, res) => { // this is not middleware, but final function, so we dont need next
-    // console.log(req); // show what is comming to us
+const handleHome = (req, res) => { 
     console.log('this is final');
     return res.send("Hello");
-
 }; 
+
+const handleProtected = (req, res) => {
+    return res.send('welcome to the private world')
+};
 
 const handleLogin = (req, res) => {
     return res.send("Login here");
-}
+};
 
-app.get("/", gossipMiddleware, handleHome); // it means browser try to go '/' <= this is url, router
+app.use(logger);
+app.use(privateMiddleware); 
+app.get("/", handleHome);
+app.get("/protected", handleProtected);
 app.get("/login", handleLogin);
 
-// 3. open application to the outside work
-// listen the external connection
-// 서버가 시작할때 응답할 포트와 콜백함수 지정
 const PORT = 4000;
 const handleListening = () => console.log(`server listening on ${PORT}🚀`);
 app.listen(PORT, handleListening)
