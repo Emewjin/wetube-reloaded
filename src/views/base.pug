@@ -1,12 +1,21 @@
 doctype html
 html(lang="en")
     head
+        //- 기본적인 CSS 템플릿을 제공하는 MVP.css
+        //- CSS작업은 제일 마지막에 하는데 그때까지 못생긴거 보기싫어서 임시방편으로 하는것임
+        link(rel="stylesheet" href="https://unpkg.com/mvp.css")
         meta(charset="UTF-8")
         meta(http-equiv="X-UA-Compatible", content="IE=edge")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         //- create block
         title #{pageTitle} | WeTube
-        //- 커스터마이징한 변수는 따로 보내줘야 한다
-    body 
-        block content
-        include partials/footer.pug
+        //- 변수는 render에서 따로 보내줘야 한다
+    body
+        header
+            h1=pageTitle 
+            //- h1에 해당 변수 하나만 들어가기 때문에 이렇게 작성해도 ${pageTitle}로 인식되는 것. =를 빼도 변수가 아닌 텍스트로 인식함. 또한 title처럼 텍스트와 변수를 함께 사용하려면 그때는 ${}로 사용해야함. h1=pageTitle는 해당 변수 단독으로만 사용가능.
+        main
+            block content
+            input(placeholder = "whats your name")
+            button send
+        include partials/footer
